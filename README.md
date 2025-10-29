@@ -1,34 +1,80 @@
-# Predicting Gene Essentiality with Multi-Omics + VAE→MLP (DDLS 2025)
+# 🧬 Predicting Gene Essentiality Using Multi-Omics Features and Deep Learning (DDLS 2025)
 
-**Short link to web app:** <https://ef6d0df6cefa38a8b9.gradio.live/>
+**Author:** *Sulagna dasgupta*  
+**Course:** Data-Driven Life Science (DDLS 2025) 
 
-This repo contains a reproducible pipeline to predict CRISPR gene effect (CERES) from multi-omics features using a Variational Autoencoder (VAE) for cell embeddings and an MLP head for per-gene regression.
+---
 
-## 🧪 What’s inside
-- `DDLS Final Project.ipynb` – contains all the codes
-- `figs/` – PCA, UMAP, observed vs predicted, residuals
-- `outputs/` – sample predictions CSVs
-- `data/` – **small artifacts only** (e.g., `latents.parquet`, `metrics_test.json`, `mlp.pt` if <100MB)
-- `DDLS2025_Final_Project_Report.docx` – final report (5 pages)
+## 🚀 Overview
+This project predicts gene essentiality (CRISPR CERES scores) for human cancer cell lines using public multi-omics data from the **Broad Institute DepMap (24Q2)**.  
+A **Variational Autoencoder (VAE)** learns compact cell-level embeddings from gene expression data, and a **Multilayer Perceptron (MLP)** predicts CERES values from these embeddings combined with copy-number variation (CNV) and mutation features.
 
-## 📊 Results (test cells)
-- R²: **0.020**
-- MAE: **0.244**
-- Spearman ρ: **0.136**
-- ROC-AUC: **0.630**
-- PR-AUC: **0.152**
+The full workflow is implemented in Python and can be run in **Google Colab** or locally.  
+A **Gradio web app** provides an accessible interface for gene-level predictions and essential/non-essential classification.
 
-## 🔁 Reproduce (Colab)
-Open in Colab and run end-to-end:
-1. Mount Drive; clone or open this repo.
-2. Place DepMap 24Q2 CSVs in your Drive (do **not** commit them); run `00_prepare.ipynb` or `src/prepare_data.py` to build aligned Parquets.
-3. `src/train_vae.py` → produces `data/latents.parquet`.
-4. `src/train_mlp.py` → trains `data/mlp.pt`.
-5. `src/eval.py` → writes `data/metrics_test.json`, figures to `figs/`.
+---
 
-> Note: We **do not** redistribute DepMap raw files. Get them from the [DepMap Portal](https://depmap.org/portal/data_page/) and accept their terms.
+## 📂 Repository Contents
+| File / Folder | Description |
+|----------------|-------------|
+| `DDLS Final Project.ipynb` | Complete Jupyter notebook — preprocessing → training → evaluation → figures. |
+| `DDLS2025_Final_Project_Report.docx` | 5-page final report following DDLS format (Abstract, Methods, Results, FAIR data). |
+| `latent_pca2.png`, `latent_umap.png` | PCA and UMAP visualizations of VAE latent embeddings. |
+| `obs_vs_pred_test.png`, `residual_hist_test.png` | Evaluation figures for MLP predictions. |
+| `latents.parquet` | 32-dimensional latent embeddings (VAE output). |
+| `metrics_test.json` | Quantitative performance metrics (R², MAE, Spearman ρ, ROC-AUC, PR-AUC). |
+| `mlp.pt` | Trained MLP model checkpoint. |
+| `requirements.txt` | Python dependencies for reproducibility. |
+| `LICENSE` | MIT open-source license. |
+| `README.md` | Project overview and instructions. |
 
-## 🌐 Web app
-Run locally or in Colab:
+---
+
+## 📊 Key Results
+| Metric | Value |
+|:--------|:------:|
+| R² | **0.020** |
+| MAE | **0.244** |
+| Spearman ρ | **0.136** |
+| ROC-AUC | **0.630** |
+| PR-AUC | **0.152** |
+
+**Interpretation:**  
+Despite modest absolute accuracy, the model captured biologically meaningful patterns — core essential genes (e.g. *PCNA*, *RPA1*, *POLR2A*) consistently had CERES < −1, while oncogenes (*KRAS*, *MYC*, *BRAF*) showed cell-specific dependencies.
+
+---
+
+## 🧠 Method Summary
+### 1. Data
+DepMap Public 24Q2:
+- Expression (`OmicsExpressionProteinCodingGenesTPMLogp1.csv`)
+- Copy Number (`OmicsCNGene.csv`)
+- Mutation (`OmicsSomaticMutationsProfile.csv`)
+- Gene Effect (`CRISPRGeneEffect.csv`)
+- Profile mapping (`OmicsProfiles.csv`)
+
+### 2. Model Workflow
+1. **VAE** (32-D latent) trained on log-TPM expression.  
+   - Encoder: 1024 → 256 → μ/log σ  
+   - Loss: MSE + KLD  
+2. **MLP** regression head:  
+   - Inputs: `[Z_cell, expr_g, cnv_g, mut_g]`  
+   - Architecture: 256 → 64 → 1 (GELU, dropout 0.2)  
+   - Loss: Smooth L1  
+3. **Evaluation:** 80/20 cell-line split; R², MAE, ρ, ROC-AUC, PR-AUC.
+
+---
+
+## 💻 Reproducibility
+Run end-to-end in Colab:
+
 ```bash
-python app/gradio_app.py
+# Mount Drive and navigate
+from google.colab import drive
+drive.mount('/content/drive')
+%cd "/content/drive/MyDrive/DDLS final project/ddls-essentiality-repo"
+
+# Install dependencies
+!pip install -r requirements.txt
+
+# Open and execute notebook
