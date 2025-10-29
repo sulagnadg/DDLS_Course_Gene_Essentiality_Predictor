@@ -5,8 +5,7 @@
 This repo contains a reproducible pipeline to predict CRISPR gene effect (CERES) from multi-omics features using a Variational Autoencoder (VAE) for cell embeddings and an MLP head for per-gene regression.
 
 ## 🧪 What’s inside
-- `src/` – training & eval scripts (VAE, MLP, metrics)
-- `app/` – Gradio app (predicts CERES, labels Essential/Non-essential)
+- `DDLS Final Project.ipynb` – contains all the codes
 - `figs/` – PCA, UMAP, observed vs predicted, residuals
 - `outputs/` – sample predictions CSVs
 - `data/` – **small artifacts only** (e.g., `latents.parquet`, `metrics_test.json`, `mlp.pt` if <100MB)
