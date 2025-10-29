@@ -78,3 +78,46 @@ drive.mount('/content/drive')
 !pip install -r requirements.txt
 
 # Open and execute notebook
+
+## 🌐 Web App
+
+A live **Gradio interface** allows users to:
+
+- Input cell-line ID (`ACH-…`) and genes (manually or via CSV upload).  
+- Predict **CERES values** and classify genes as  
+  - 🧩 **Essential** (CERES < −0.5)  
+  - ⚪ **Non-essential** (CERES ≥ −0.5).  
+- Adjust the threshold interactively.  
+- Download prediction results as CSV.
+
+**👉 Live demo:** [Gradio App](https://ef6d0df6cefa38a8b9.gradio.live/)
+
+---
+
+## 🔁 FAIR & Accessibility
+
+This project follows FAIR and open science principles:
+
+- **Findable:** DOI can be added via GitHub release or Zenodo.  
+- **Accessible:** Public repository and clear data pointers.  
+- **Interoperable:** Standard formats (CSV, Parquet, JSON).  
+- **Reusable:** MIT-licensed code with explicit dependencies and documentation.
+
+---
+
+## 🧾 Citation
+
+If you reuse or build upon this workflow, please cite:
+
+> [Sulagna Dasgupta]. (2025). *Predicting Gene Essentiality Using Multi-Omics Features and Deep Learning.*  
+> DDLS 2025 Final Project, Data-Driven Life Science Program.
+
+---
+
+## 🙏 Acknowledgments
+
+- **DepMap Consortium** — for providing open CRISPR gene essentiality datasets.  
+- **DDLS 2025 instructors** — for their guidance and evaluation framework.  
+- **GenAI tools (ChatGPT, Gemini-CLI)** — used for brainstorming, debugging, and documentation.  
+  All interpretations, data analysis, and modeling decisions are author-driven.
+
