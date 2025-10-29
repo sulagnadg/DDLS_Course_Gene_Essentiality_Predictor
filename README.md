@@ -80,6 +80,19 @@ drive.mount('/content/drive')
 # Open and execute notebook
 ```
 ---
+
+> **Note:**  
+> The DepMap raw datasets used in this project (24Q2 release) are not redistributed here to respect licensing terms.  
+> You can download them freely from the [DepMap Portal](https://depmap.org/portal/data_page/) after accepting their terms of use.  
+> Required files include:
+> - OmicsExpressionProteinCodingGenesTPMLogp1.csv  
+> - CRISPRGeneEffect.csv  
+> - OmicsCNGene.csv  
+> - OmicsSomaticMutationsProfile.csv  
+> - OmicsProfiles.csv
+
+---
+
 ## 🌐 Web App
 
 A live **Gradio interface** allows users to:
