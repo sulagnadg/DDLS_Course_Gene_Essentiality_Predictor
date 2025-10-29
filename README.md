@@ -79,6 +79,7 @@ drive.mount('/content/drive')
 
 # Open and execute notebook
 
+---
 ## 🌐 Web App
 
 A live **Gradio interface** allows users to:
