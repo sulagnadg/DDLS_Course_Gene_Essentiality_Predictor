@@ -17,7 +17,7 @@ A **Gradio web app** provides an accessible interface for gene-level predictions
 ## 📂 Repository Contents
 | File / Folder | Description |
 |----------------|-------------|
-| `DDLS Final Project.ipynb` | Complete Jupyter notebook — preprocessing → training → evaluation → figures. |
+| `DDLS_Project_Notebook_Version1.ipynb` | First version of complete Jupyter notebook — preprocessing → training → evaluation → figures. |
 | `DDLS2025_Final_Project_Report.docx` | 5-page final report following DDLS format (Abstract, Methods, Results, FAIR data). |
 | `latent_pca2.png`, `latent_umap.png` | PCA and UMAP visualizations of VAE latent embeddings. |
 | `obs_vs_pred_test.png`, `residual_hist_test.png` | Evaluation figures for MLP predictions. |
